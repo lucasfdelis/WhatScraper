@@ -4,6 +4,8 @@ import re,os
 import urllib.request,urllib.parse,threading
 from datetime import datetime
 
+#teste 2
+
 try:
 	from googlesearch import search
 except ImportError:
