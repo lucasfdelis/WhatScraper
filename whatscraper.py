@@ -69,11 +69,14 @@ def start(index):
 	print("[*] Initializing...")
 	if index >= len(availabledom):
 		return
-	query = "intext:chat.whatsapp.com inurl:" + availabledom[index]
+	query = 'negocios + "https://chat.whatsapp.com'
 	print("[*] Querying Google By Dorks ...")
-	for url in search(query, tld="com", num=10, stop=None, pause=2):
-		txt = urllib.request.urlopen(url).read().decode("utf8")
-		scrape(txt)
+	for url in search(query):
+		try:
+			txt = urllib.request.urlopen(url).read().decode("utf8")
+			scrape(txt)
+		except Exception as e:
+			print(e)
 
 def scrap_from_link(index):
 	print("[*] Initializing...")
@@ -158,13 +161,16 @@ def main():
 		f.close()
 	
 	if inp == 1:	
-		for i in range(0, int(input("[#] Enter the number of threads(1-" + str(len(availabledom)) + "):- "))):
-			thread = threading.Thread(target=start, args=(i,))
-			thread.start()
-			threads.append(thread)
+		try:
+			for i in range(0, int(input("[#] Enter the number of threads(1-" + str(len(availabledom)) + "):- "))):
+				thread = threading.Thread(target=start, args=(i,))
+				thread.start()
+				threads.append(thread)
 
-		for i in threads:
-			i.join()
+			for i in threads:
+				i.join()
+		except:
+			pass
 	elif inp == 2:
 		for i in range(0, int(input("[#] Enter the number of threads(1-" + str(len(site_urls)) + "):- "))):
 			thread = threading.Thread(target=scrap_from_link, args=(i,))
